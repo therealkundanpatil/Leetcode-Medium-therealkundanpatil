@@ -1,9 +1,13 @@
 package medium;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * LeetCode Medium
  * 
- * Id : 468 		Validate IP Address
+ * Id : 468 Validate IP Address
  * 
  * Time Complexity : O(n2)
  * 
@@ -25,10 +29,12 @@ public class ValidIPAddress {
 				return "IPv4";
 			}
 		} else if (ipData.length == 8) {
+			Set<Character> set = new HashSet<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b',
+					'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F'));
 			if (!countSemiColonOperators(IP, 7)) {
 				return "Neither";
 			}
-			if (checkValididtyForIPV6(ipData)) {
+			if (checkValididtyForIPV6(ipData, set)) {
 				return "IPv6";
 			}
 		}
@@ -38,46 +44,35 @@ public class ValidIPAddress {
 
 	public static boolean checkValididtyForIPV4(String[] ipData) {
 		for (String record : ipData) {
-			if (record.length() >= 1 && record.length() <= 3) {
-				char[] recordData = record.toCharArray();
-				if (record.length() > 1 && recordData[0] == '0') {
+			try {
+				if (record.length() > 1 && record.charAt(0) == '0') {
 					return false;
 				}
-				for (int i = 0; i < recordData.length; i++) {
-					if (recordData[i] >= 48 && recordData[i] <= 57) {
-						continue;
-					} else {
-						System.out.println("Here");
-						return false;
-					}
-				}
-				if (Integer.parseInt(record) > 255) {
-					System.out.println("Enetered here");
+				int number = Integer.parseInt(record);
+				if (number < 0 || number > 255) {
 					return false;
 				}
-			} else {
+			} catch (Exception e) {
 				return false;
 			}
-
 		}
 		return true;
 	}
 
-	public static boolean checkValididtyForIPV6(String[] ipData) {
+	public static boolean checkValididtyForIPV6(String[] ipData, Set<Character> set) {
 		for (String record : ipData) {
-			if (record.length() >= 1 && record.length() <= 4) {
-				char[] recordData = record.toCharArray();
-				for (int i = 0; i < recordData.length; i++) {
-					if ((recordData[i] >= 48 && recordData[i] <= 57) || (recordData[i] >= 65 && recordData[i] <= 70)
-							|| (recordData[i] >= 97 && recordData[i] <= 102)) {
-						continue;
-					} else {
-						return false;
-					}
-				}
-			} else {
+			if (record.length() == 0) {
 				return false;
 			}
+			if (record.length() < 1 || record.length() > 4) {
+				return false;
+			}
+			for (char ch : record.toCharArray()) {
+				if (!set.contains(ch)) {
+					return false;
+				}
+			}
+
 		}
 
 		return true;
