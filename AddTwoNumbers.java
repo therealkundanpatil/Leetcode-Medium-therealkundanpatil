@@ -16,13 +16,13 @@ class ListNode {
 		this.next = next;
 	}
 }
+
 /**
  * LeetCode Medium
  * 
  * Id : 2. Add Two Numbers
  * 
- * Time Complexity : O(n)
- * Space Complexity : O(1)
+ * Time Complexity : O(n) Space Complexity : O(1)
  * 
  * @author Kundan
  *
@@ -37,7 +37,8 @@ public class AddTwoNumbers {
 		int firstNumber = 0;
 		// Second operand
 		int secondNumber = 0;
-		// If Digit greater than 10 then we obtain last digit it will be stored in this variable
+		// If Digit greater than 10 then we obtain last digit it will be stored in this
+		// variable
 		int originalDigit = 0;
 		// To track Head of the resulting list
 		ListNode head = null;
@@ -59,10 +60,10 @@ public class AddTwoNumbers {
 				secondNumber = 0;
 			}
 
-			// Add two numbers along with carry 
+			// Add two numbers along with carry
 			int computedSum = firstNumber + secondNumber + carry;
-			
-			//Create a node 
+
+			// Create a node
 			ListNode node = null;
 			if (computedSum <= 9) {
 				node = new ListNode(computedSum);
@@ -72,11 +73,11 @@ public class AddTwoNumbers {
 				originalDigit = computedSum % 10;
 				node = new ListNode(originalDigit);
 			}
-			
+
 			// Make it a part of Final list
 			l3.next = node;
-			
-			// Check if head is null 
+
+			// Check if head is null
 			if (head == null) {
 				head = node;
 			}
@@ -85,23 +86,23 @@ public class AddTwoNumbers {
 			if (l1 != null) {
 				l1 = l1.next;
 			}
-			
+
 			// Onto next node if not null
 			if (l2 != null) {
 				l2 = l2.next;
 			}
-			
+
 			// Update the final list as well
 			l3 = l3.next;
 		}
 
-		// Edge case if carry is not zero 
+		// Edge case if carry is not zero
 		if (carry != 0) {
 			ListNode node = new ListNode(carry);
 			l3.next = node;
 			l3 = l3.next;
 		}
-		
+
 		// Return Head simply
 		return head;
 	}
